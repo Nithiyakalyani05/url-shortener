@@ -1,0 +1,31 @@
+app:
+  base-url: ${APP_BASE_URL:http://localhost:8080}
+
+spring:
+  application:
+    name: url-shortener
+  datasource:
+    url: jdbc:h2:mem:shortener;DB_CLOSE_DELAY=-1
+    username: sa
+    password: ""
+  jpa:
+    open-in-view: false
+    hibernate:
+      ddl-auto: update
+
+management:
+  endpoints:
+    web:
+      exposure:
+        include: health,info
+
+---
+# Activate with SPRING_PROFILES_ACTIVE=postgres
+spring:
+  config:
+    activate:
+      on-profile: postgres
+  datasource:
+    url: ${DB_URL:jdbc:postgresql://localhost:5432/shortener}
+    username: ${DB_USER:shortener}
+    password: ${DB_PASSWORD:shortener}
